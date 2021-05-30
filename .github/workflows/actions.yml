@@ -51,6 +51,7 @@ jobs:
           sleep 3s
           sudo rm /usr/lib/systemd/system/jellyfin.service
           sudo cp  /home/runner/work/test/test/jellyfin.service /usr/lib/systemd/system/
+          sudo systemctl daemon-reload
           sudo systemctl start jellyfin
           #sudo /usr/bin/jellyfin --service --configdir="/home/runner/mount/Jellyfin Settings/Config/" --datadir="/home/runner/mount/Jellyfin Settings/Data/" ${JELLYFIN_WEB_OPT} ${JELLYFIN_RESTART_OPT} ${JELLYFIN_FFMPEG_OPT} ${JELLYFIN_SERVICE_OPT} ${JELLYFIN_NOWEBAPP_OPT}
           timeout 345m cloudflared --url localhost:8096  || ( [[ $? -eq 124 ]] && \echo "WARNING: Timeout reached for Jellyfin, but that's OK" )
