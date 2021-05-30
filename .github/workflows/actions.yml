@@ -30,11 +30,6 @@ jobs:
         run: |
           sudo mkdir -p /home/runner/mount
           sudo rclone mount Media:/ /home/runner/mount/  --daemon --allow-other --cache-db-purge --buffer-size 32M --use-mmap --dir-cache-time 4h --drive-chunk-size 16M --timeout 1h --vfs-cache-mode minimal --vfs-read-chunk-size 128M --vfs-read-chunk-size-limit 1G --fast-list
-          sleep 3s
-          sudo mkdir -p /var/lib/jellyfin/
-          sudo mkdir -p /etc/jellyfin/
-          sudo ln -s "/home/runner/mount/Jellyfin Settings/var/" "/var/lib/jellyfin/"
-          sudo ln -s "/home/runner/mount/Jellyfin Settings/etc/" "/etc/jellyfin/"
           sudo apt install apt-transport-https
           wget -O - https://repo.jellyfin.org/jellyfin_team.gpg.key | sudo apt-key add -
           echo "deb [arch=$( dpkg --print-architecture )] https://repo.jellyfin.org/$( awk -F'=' '/^ID=/{ print $NF }' /etc/os-release ) $( awk -F'=' '/^VERSION_CODENAME=/{ print $NF }' /etc/os-release ) main" | sudo tee /etc/apt/sources.list.d/jellyfin.list
@@ -56,6 +51,6 @@ jobs:
           #sudo rm /usr/lib/systemd/system/jellyfin.service
           #sudo cp  /home/runner/work/test/test/jellyfin.service /usr/lib/systemd/system/
           #sudo systemctl daemon-reload
-          sudo systemctl start jellyfin
-          #sudo /usr/bin/jellyfin --service --configdir="/home/runner/mount/Jellyfin Settings/Config/" --datadir="/home/runner/mount/Jellyfin Settings/Data/" ${JELLYFIN_WEB_OPT} ${JELLYFIN_RESTART_OPT} ${JELLYFIN_FFMPEG_OPT} ${JELLYFIN_SERVICE_OPT} ${JELLYFIN_NOWEBAPP_OPT}
+          #sudo systemctl start jellyfin
+          sudo /usr/bin/jellyfin --service --webdir="/etc/jellyfin/" --configdir="/home/runner/mount/Jellyfin Settings/Config/" --datadir="/home/runner/mount/Jellyfin Settings/Data/" ${JELLYFIN_WEB_OPT} ${JELLYFIN_RESTART_OPT} ${JELLYFIN_FFMPEG_OPT} ${JELLYFIN_SERVICE_OPT} ${JELLYFIN_NOWEBAPP_OPT}
           timeout 345m cloudflared --url localhost:8096  || ( [[ $? -eq 124 ]] && \echo "WARNING: Timeout reached for Jellyfin, but that's OK" )
