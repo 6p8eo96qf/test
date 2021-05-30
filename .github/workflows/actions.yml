@@ -18,6 +18,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: rclone Install
         run: |
+          pwd
           curl https://rclone.org/install.sh | sudo bash
           mkdir -p ~/.config/rclone
       - name: rclone Config
