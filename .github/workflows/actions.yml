@@ -34,17 +34,19 @@ jobs:
           sudo apt update
           sudo apt install jellyfin
           sudo systemctl stop jellyfin
+          export JELLYFIN_DATA_DIR=/home/runner/mount/Jellyfin Settings/Data/
+          export JELLYFIN_CONFIG_DIR=/home/runner/mount/Jellyfin Settings/Config/
           mkdir cloudflare
           cd cloudflare
           wget https://github.com/cryptbphcoutlook/test123/raw/main/cloudflare/cloudflared-stable-linux-amd64.deb
           sudo dpkg -i cloudflared-stable-linux-amd64.deb
           cd ..
-          cd ~/
-          mkdir .cloudflared
-          cd .cloudflared
-          cat << EOF >> cert.pem
-          ${{ secrets.CF_CERT }}
-          EOF
-          cd ..
+          #cd ~/
+          #mkdir .cloudflared
+          #cd .cloudflared
+          #cat << EOF >> cert.pem
+          #${{ secrets.CF_CERT }}
+          #EOF
+          #cd ..
           sudo rclone mount Media:/ /home/runner/mount/  --daemon --allow-other --cache-db-purge --buffer-size 32M --use-mmap --dir-cache-time 4h --drive-chunk-size 16M --timeout 1h --vfs-cache-mode minimal --vfs-read-chunk-size 128M --vfs-read-chunk-size-limit 1G --fast-list
-          timeout 345m cloudflared --url localhost:8096 --hostname ${{ secrets.JELLYFIN_DOMAIN }} || ( [[ $? -eq 124 ]] && \echo "WARNING: Timeout reached for Jellyfin, but that's OK" )
+          timeout 345m cloudflared --url localhost:8096  || ( [[ $? -eq 124 ]] && \echo "WARNING: Timeout reached for Jellyfin, but that's OK" )
