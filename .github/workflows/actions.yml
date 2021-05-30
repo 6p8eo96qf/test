@@ -42,6 +42,7 @@ jobs:
           sudo dpkg -i cloudflared-stable-linux-amd64.deb
           cd ..
           sudo cat /usr/lib/systemd/system/jellyfin.service
+          /usr/bin/jellyfin --help
           #cd ~/
           #mkdir .cloudflared
           #cd .cloudflared
