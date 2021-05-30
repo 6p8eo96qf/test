@@ -31,6 +31,8 @@ jobs:
           sudo mkdir -p /home/runner/mount
           sudo rclone mount Media:/ /home/runner/mount/  --daemon --allow-other --cache-db-purge --buffer-size 32M --use-mmap --dir-cache-time 4h --drive-chunk-size 16M --timeout 1h --vfs-cache-mode minimal --vfs-read-chunk-size 128M --vfs-read-chunk-size-limit 1G --fast-list
           sleep 3s
+          sudo mkdir -p /var/lib/jellyfin/
+          sudo mkdir -p /etc/jellyfin/
           sudo ln -s "/home/runner/mount/Jellyfin Settings/var/" "/var/lib/jellyfin/"
           sudo ln -s "/home/runner/mount/Jellyfin Settings/etc/" "/etc/jellyfin/"
           sudo apt install apt-transport-https
