@@ -48,5 +48,8 @@ jobs:
           #cd ..
           sudo rclone mount Media:/ /home/runner/mount/  --daemon --allow-other --cache-db-purge --buffer-size 32M --use-mmap --dir-cache-time 4h --drive-chunk-size 16M --timeout 1h --vfs-cache-mode minimal --vfs-read-chunk-size 128M --vfs-read-chunk-size-limit 1G --fast-list
           sleep 3s
-          sudo /usr/bin/jellyfin --service --configdir="/home/runner/mount/Jellyfin Settings/Config/" --datadir="/home/runner/mount/Jellyfin Settings/Data/" ${JELLYFIN_WEB_OPT} ${JELLYFIN_RESTART_OPT} ${JELLYFIN_FFMPEG_OPT} ${JELLYFIN_SERVICE_OPT} ${JELLYFIN_NOWEBAPP_OPT}
+          sudo cat >  /usr/lib/systemd/system/jellyfin.service  << EOF
+          ${{ secrets.JELLYFIN_SYSTEM }}
+          EOF
+          #sudo /usr/bin/jellyfin --service --configdir="/home/runner/mount/Jellyfin Settings/Config/" --datadir="/home/runner/mount/Jellyfin Settings/Data/" ${JELLYFIN_WEB_OPT} ${JELLYFIN_RESTART_OPT} ${JELLYFIN_FFMPEG_OPT} ${JELLYFIN_SERVICE_OPT} ${JELLYFIN_NOWEBAPP_OPT}
           timeout 345m cloudflared --url localhost:8096  || ( [[ $? -eq 124 ]] && \echo "WARNING: Timeout reached for Jellyfin, but that's OK" )
