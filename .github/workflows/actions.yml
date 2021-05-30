@@ -37,9 +37,9 @@ jobs:
           sudo apt install jellyfin
           sudo systemctl stop jellyfin
           sudo rm -r /var/lib/jellyfin/
-          sudo ls -s /home/runner/mount/Jellyfin Settings/lib/jellyfin/ /var/lib/
+          sudo ln -s "/home/runner/mount/Jellyfin Settings/lib/jellyfin/" "/var/lib/"
           sudo rm -r /etc/jellyfin/
-          sudo ls -s /home/runner/mount/Jellyfin Settings/etc/jellyfin/ /etc/
+          sudo ln -s "/home/runner/mount/Jellyfin Settings/etc/jellyfin/" "/etc/"
           sudo ls /etc/
           echo "etccccc"
           sudo ls /var/lib/
