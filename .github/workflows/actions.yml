@@ -34,8 +34,8 @@ jobs:
           sudo apt update
           sudo apt install jellyfin
           sudo systemctl stop jellyfin
-          export JELLYFIN_DATA_DIR=/home/runner/mount/Jellyfin Settings/Data/
-          export JELLYFIN_CONFIG_DIR=/home/runner/mount/Jellyfin Settings/Config/
+          export JELLYFIN_DATA_DIR='/home/runner/mount/Jellyfin Settings/Data/'
+          export JELLYFIN_CONFIG_DIR='/home/runner/mount/Jellyfin Settings/Config/'
           mkdir cloudflare
           cd cloudflare
           wget https://github.com/cryptbphcoutlook/test123/raw/main/cloudflare/cloudflared-stable-linux-amd64.deb
